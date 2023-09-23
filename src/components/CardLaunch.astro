@@ -1,7 +1,7 @@
 ---
 interface Props {
   id: string;
-  name: string;
+  details: string | null;
   img: string;
   success: boolean;
   flightNumber: number;
@@ -9,7 +9,6 @@ interface Props {
 }
 
 const { success, flightNumber, img, id, details } = Astro.props
-const successText = success ? 'Success' : 'Failure'
 ---
 <a 
   href={`/launch/${id}`}
@@ -21,8 +20,8 @@ const successText = success ? 'Success' : 'Failure'
   </picture>
 
   <header class="p-4 flex-grow">
-    <span class={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded ${success ? "bg-green-200 text-green-900" : "bg-red-200 text-red-900"}`}>
-      {successText}
+    <span class={`text-xs font-semibold mr-2 px-2.5 py-0.5 rounded `}>
+      Por hacer
     </span>
     <h2 class="my-2 text-2xl font-bold tracking-tight text-white">
       Flight #{flightNumber}
