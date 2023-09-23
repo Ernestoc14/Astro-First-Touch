@@ -1,0 +1,35 @@
+---
+import {getLatestLaunches, getLaunchBy } from '../../services/spacex.ts'
+import Layout from '../../layouts/Layout.astro'
+
+const { id } = Astro.params
+
+let launch
+if (id) {
+  launch = await getLaunchBy({ id })
+}
+
+export async function getStaticPaths(){
+  // Call to External API
+  const launches = await getLatestLaunches()
+  return launches.map((launch) => ({
+    params: { id: launch.id },
+  }))
+}
+---
+
+<Layout title=`Lanzamiento ${id}`>
+  <div class="flex place-content-center">
+    <article class="flex flex-col gap-y-4 w-1/2 items-center">
+      <img 
+        class="w-52 h-auto"
+        src={launch?.links.patch.small}
+        alt={`Imagen del lanzamiento ${launch?.name}`}
+      />
+      <h2 class="text-4xl text-white font-bold text-center">
+        {launch?.name}
+      </h2>
+      <p class="text-lg font-semibold text-center">{launch?.details}</p>
+    </article>
+  </div>
+</Layout>
